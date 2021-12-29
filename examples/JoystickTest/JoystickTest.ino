@@ -1,9 +1,9 @@
-// Program used to test the USB Joystick object on the 
+// Program used to test the USB Joystick object on the
 // Arduino Leonardo or Arduino Micro.
 //
 // Matthew Heironimus
 // 2015-03-28 - Original Version
-// 2015-11-18 - Updated to use the new Joystick library 
+// 2015-11-18 - Updated to use the new Joystick library
 //              written for Arduino IDE Version 1.6.6 and
 //              above.
 // 2016-05-13   Updated to use new dynamic Joystick library
@@ -37,7 +37,7 @@ void testSingleButtonPush(unsigned int button)
   }
 }
 
-void testMultiButtonPush(unsigned int currentStep) 
+void testMultiButtonPush(unsigned int currentStep)
 {
   for (int button = 0; button < 32; button++)
   {
@@ -72,14 +72,14 @@ void testXYAxis(unsigned int currentStep)
 {
   int xAxis;
   int yAxis;
-  
+
   if (currentStep < 256)
   {
     xAxis = currentStep - 127;
     yAxis = -127;
     Joystick.setXAxis(xAxis);
     Joystick.setYAxis(yAxis);
-  } 
+  }
   else if (currentStep < 512)
   {
     yAxis = currentStep - 256 - 127;
@@ -108,15 +108,15 @@ void testZAxis(unsigned int currentStep)
   if (currentStep < 128)
   {
     Joystick.setZAxis(-currentStep);
-  } 
+  }
   else if (currentStep < 256 + 128)
   {
     Joystick.setZAxis(currentStep - 128 - 127);
-  } 
+  }
   else if (currentStep < 256 + 128 + 127)
   {
     Joystick.setZAxis(127 - (currentStep - 383));
-  } 
+  }
 }
 
 void testHatSwitch(unsigned int currentStep)
@@ -178,7 +178,7 @@ void setup() {
   Joystick.setRzAxisRange(0, 720);
   Joystick.setThrottleRange(0, 255);
   Joystick.setRudderRange(255, 0);
-  
+
   if (testAutoSendMode)
   {
     Joystick.begin();
@@ -187,7 +187,7 @@ void setup() {
   {
     Joystick.begin(false);
   }
-  
+
   pinMode(A0, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 }
@@ -204,15 +204,15 @@ void loop() {
 
   // Turn indicator light on.
   digitalWrite(LED_BUILTIN, 1);
-  
+
   if (millis() >= gNextTime)
   {
-   
+
     if (gCurrentStep < 33)
     {
       gNextTime = millis() + gcButtonDelta;
       testSingleButtonPush(gCurrentStep);
-    } 
+    }
     else if (gCurrentStep < 37)
     {
       gNextTime = millis() + gcButtonDelta;
@@ -243,12 +243,12 @@ void loop() {
       gNextTime = millis() + gcAnalogDelta;
       testXYZAxisRotation(gCurrentStep - (37 + 256 + 1024 + 128 + 510 + 28));
     }
-    
+
     if (testAutoSendMode == false)
     {
       Joystick.sendState();
     }
-    
+
     gCurrentStep++;
     if (gCurrentStep == (37 + 256 + 1024 + 128 + 510 + 28 + 360))
     {

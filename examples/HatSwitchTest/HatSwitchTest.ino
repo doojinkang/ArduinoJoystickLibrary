@@ -1,7 +1,7 @@
 // Simple example application that shows how to read four Arduino
 // digital pins and map them to the USB Joystick library's hat switch.
 //
-// The digital pins 4, 5, 6, 7, 8, 9, 10, and 11 are grounded when 
+// The digital pins 4, 5, 6, 7, 8, 9, 10, and 11 are grounded when
 // they are pressed.
 //
 // Pin Mappings:
@@ -23,14 +23,14 @@
 
 #include <Joystick.h>
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
   JOYSTICK_TYPE_GAMEPAD, 0,
   JOYSTICK_DEFAULT_HATSWITCH_COUNT,
   false, false, false, false, false, false,
   false, false, false, false, false);
 
 void setup() {
-  
+
   // Initialize Button Pins
   for (int index = 4; index < 12; index++)
   {
@@ -66,7 +66,7 @@ void loop() {
   for (int hatSwitch = 0; hatSwitch < 2; hatSwitch++)
   {
     if (valueChanged[hatSwitch]) {
-      
+
       if ((lastButtonState[hatSwitch][0] == 0)
         && (lastButtonState[hatSwitch][1] == 0)
         && (lastButtonState[hatSwitch][2] == 0)
@@ -85,9 +85,9 @@ void loop() {
       if (lastButtonState[hatSwitch][3] == 1) {
         Joystick.setHatSwitch(hatSwitch, 270);
       }
-      
+
     } // if the value changed
-    
+
   } // for each hat switch
 
   delay(50);

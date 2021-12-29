@@ -1,5 +1,5 @@
-// Program used to test the driving simulator functions on 
-// the USB Joystick object on the Arduino Leonardo or 
+// Program used to test the driving simulator functions on
+// the USB Joystick object on the Arduino Leonardo or
 // Arduino Micro.
 //
 // Matthew Heironimus
@@ -8,7 +8,7 @@
 
 #include "Joystick.h"
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
   JOYSTICK_TYPE_MULTI_AXIS, 4, 0,
   false, false, false, false, false, false,
   false, false, true, true, true);
@@ -35,7 +35,7 @@ void testSingleButtonPush(unsigned int button)
   }
 }
 
-void testMultiButtonPush(unsigned int currentStep) 
+void testMultiButtonPush(unsigned int currentStep)
 {
   for (int button = 0; button < 4; button++)
   {
@@ -86,7 +86,7 @@ void setup() {
   Joystick.setAcceleratorRange(0, 260);
   Joystick.setBrakeRange(0, 260);
   Joystick.setSteeringRange(0, 300);
-  
+
   if (testAutoSendMode)
   {
     Joystick.begin();
@@ -95,7 +95,7 @@ void setup() {
   {
     Joystick.begin(false);
   }
-  
+
   pinMode(A0, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 }
@@ -112,15 +112,15 @@ void loop() {
 
   // Turn indicator light on.
   digitalWrite(LED_BUILTIN, 1);
-  
+
   if (millis() >= gNextTime)
   {
-   
+
     if (gCurrentStep < 4)
     {
       gNextTime = millis() + gcButtonDelta;
       testSingleButtonPush(gCurrentStep);
-    } 
+    }
     else if (gCurrentStep < 9)
     {
       gNextTime = millis() + gcButtonDelta;
@@ -136,12 +136,12 @@ void loop() {
       gNextTime = millis() + gcAnalogDelta;
       testSteering(gCurrentStep - (9 + 260));
     }
-    
+
     if (testAutoSendMode == false)
     {
       Joystick.sendState();
     }
-    
+
     gCurrentStep++;
     if (gCurrentStep >= (9 + 260 + 600))
     {

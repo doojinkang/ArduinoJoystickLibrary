@@ -1,5 +1,5 @@
 // Simple example application that shows how to read four Arduino
-// digital pins and map them to buttons on a joystick or keys on a 
+// digital pins and map them to buttons on a joystick or keys on a
 // keyboard uisng the Arduino Joystick and Keyboard libraries.
 //
 // The digital pins 9, 10, 11, and 12 are grounded when they are pressed.
@@ -7,9 +7,9 @@
 // NOTE: This sketch file is for use with Arduino Leonardo and
 //       Arduino Micro only.
 //
-// Pin  9 = Joystick Button 0 
+// Pin  9 = Joystick Button 0
 // Pin 10 = Joystick Button 1
-// Pin 11 = 1 key on the Keyboard 
+// Pin 11 = 1 key on the Keyboard
 // Pin 12 = 2 key on the Keyboard
 //
 // by Matthew Heironimus

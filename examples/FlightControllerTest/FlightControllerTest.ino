@@ -1,5 +1,5 @@
-// Program used to test the USB Joystick library when used as 
-// a Flight Controller on the Arduino Leonardo or Arduino 
+// Program used to test the USB Joystick library when used as
+// a Flight Controller on the Arduino Leonardo or Arduino
 // Micro.
 //
 // Matthew Heironimus
@@ -8,7 +8,7 @@
 
 #include "Joystick.h"
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
   JOYSTICK_TYPE_MULTI_AXIS, 32, 0,
   true, true, false, false, false, false,
   true, true, false, false, false);
@@ -35,7 +35,7 @@ void testSingleButtonPush(unsigned int button)
   }
 }
 
-void testMultiButtonPush(unsigned int currentStep) 
+void testMultiButtonPush(unsigned int currentStep)
 {
   for (int button = 0; button < 32; button++)
   {
@@ -70,14 +70,14 @@ void testXYAxis(unsigned int currentStep)
 {
   int xAxis;
   int yAxis;
-  
+
   if (currentStep < 256)
   {
     xAxis = currentStep - 127;
     yAxis = -127;
     Joystick.setXAxis(xAxis);
     Joystick.setYAxis(yAxis);
-  } 
+  }
   else if (currentStep < 512)
   {
     yAxis = currentStep - 256 - 127;
@@ -114,7 +114,7 @@ void setup() {
   Joystick.setZAxisRange(-127, 127);
   Joystick.setThrottleRange(0, 255);
   Joystick.setRudderRange(0, 255);
-  
+
   if (testAutoSendMode)
   {
     Joystick.begin();
@@ -123,7 +123,7 @@ void setup() {
   {
     Joystick.begin(false);
   }
-  
+
   pinMode(A0, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 }
@@ -140,15 +140,15 @@ void loop() {
 
   // Turn indicator light on.
   digitalWrite(LED_BUILTIN, 1);
-  
+
   if (millis() >= gNextTime)
   {
-   
+
     if (gCurrentStep < 33)
     {
       gNextTime = millis() + gcButtonDelta;
       testSingleButtonPush(gCurrentStep);
-    } 
+    }
     else if (gCurrentStep < 37)
     {
       gNextTime = millis() + gcButtonDelta;
@@ -164,12 +164,12 @@ void loop() {
       gNextTime = millis() + gcAnalogDelta;
       testXYAxis(gCurrentStep - (37 + 256));
     }
-    
+
     if (testAutoSendMode == false)
     {
       Joystick.sendState();
     }
-    
+
     gCurrentStep++;
     if (gCurrentStep >= (37 + 256 + 1024 + 128))
     {

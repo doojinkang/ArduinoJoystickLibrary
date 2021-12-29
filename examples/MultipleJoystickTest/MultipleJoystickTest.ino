@@ -1,5 +1,5 @@
-// Program used to test using the Arduino Joystick Library 
-// to create multiple Joystick objects on a single Arduino 
+// Program used to test using the Arduino Joystick Library
+// to create multiple Joystick objects on a single Arduino
 // Leonardo or Arduino Micro.
 //
 // Each joystick has a unique configuration.
@@ -41,7 +41,7 @@ void testSingleButtonPush(int joystickId, unsigned int button)
   }
 }
 
-void testMultiButtonPush(int joystickId, unsigned int currentStep) 
+void testMultiButtonPush(int joystickId, unsigned int currentStep)
 {
   for (int button = 0; button < 16; button++)
   {
@@ -78,7 +78,7 @@ void testXYAxis(int joystickId, unsigned int currentStep)
   {
     Joystick[joystickId].setXAxis(currentStep - 127);
     Joystick[joystickId].setYAxis(-127);
-  } 
+  }
   else if (currentStep < 510)
   {
     Joystick[joystickId].setYAxis(currentStep - 255 - 127);
@@ -104,7 +104,7 @@ void setup() {
   {
     Joystick[index].setXAxisRange(-127, 127);
     Joystick[index].setYAxisRange(-127, 127);
-  
+
     if (testAutoSendMode)
     {
       Joystick[index].begin();
@@ -114,7 +114,7 @@ void setup() {
       Joystick[index].begin(false);
     }
   }
-  
+
   pinMode(A0, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 }
@@ -130,15 +130,15 @@ void loop() {
 
   // Turn indicator light on.
   digitalWrite(LED_BUILTIN, 1);
-  
+
   if (millis() >= gNextTime)
   {
-   
+
     if (gCurrentStep < 17)
     {
       gNextTime = millis() + gcButtonDelta;
       testSingleButtonPush(gJoystickId, gCurrentStep);
-    } 
+    }
     else if (gCurrentStep < (17 + 4))
     {
       gNextTime = millis() + gcButtonDelta;
@@ -149,18 +149,18 @@ void loop() {
       gNextTime = millis() + gcAnalogDelta;
       testXYAxis(gJoystickId, gCurrentStep - (17 + 4));
     }
-    
+
     if (testAutoSendMode == false)
     {
       Joystick[gJoystickId].sendState();
     }
-    
+
     gCurrentStep++;
     if (gCurrentStep == (17 + 4 + 1024 + 128))
     {
       gNextTime = millis() + gcCycleDelta;
       gCurrentStep = 0;
-      
+
       if (++gJoystickId >= JOYSTICK_COUNT)
       {
         gJoystickId = 0;

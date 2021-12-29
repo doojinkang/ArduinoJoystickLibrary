@@ -1,5 +1,5 @@
 /*
-  Modified by Matthew Heironimus to support HID Report Descriptors to be in 
+  Modified by Matthew Heironimus to support HID Report Descriptors to be in
   standard RAM in addition to program memory (PROGMEM).
 
   Copyright (c) 2015, Arduino LLC
@@ -65,8 +65,8 @@
 
 // Normal or bios protocol (Keyboard/Mouse) HID1.11 Page 54 7.2.5 Get_Protocol Request
 // "protocol" variable is used for this purpose.
-#define DYNAMIC_HID_BOOT_PROTOCOL	0
-#define DYNAMIC_HID_REPORT_PROTOCOL	1
+#define DYNAMIC_HID_BOOT_PROTOCOL      0
+#define DYNAMIC_HID_REPORT_PROTOCOL    1
 
 // HID Request Type HID1.11 Page 51 7.2.1 Get_Report Request
 #define DYNAMIC_HID_REPORT_TYPE_INPUT   1
@@ -75,61 +75,61 @@
 
 typedef struct
 {
-  uint8_t len;      // 9
-  uint8_t dtype;    // 0x21
-  uint8_t addr;
-  uint8_t versionL; // 0x101
-  uint8_t versionH; // 0x101
-  uint8_t country;
-  uint8_t desctype; // 0x22 report
-  uint8_t descLenL;
-  uint8_t descLenH;
+    uint8_t len;      // 9
+    uint8_t dtype;    // 0x21
+    uint8_t addr;
+    uint8_t versionL; // 0x101
+    uint8_t versionH; // 0x101
+    uint8_t country;
+    uint8_t desctype; // 0x22 report
+    uint8_t descLenL;
+    uint8_t descLenH;
 } DYNAMIC_HIDDescDescriptor;
 
-typedef struct 
+typedef struct
 {
-  InterfaceDescriptor hid;
-  DYNAMIC_HIDDescDescriptor   desc;
-  EndpointDescriptor  in;
+    InterfaceDescriptor hid;
+    DYNAMIC_HIDDescDescriptor   desc;
+    EndpointDescriptor  in;
 } DYNAMIC_HIDDescriptor;
 
 class DynamicHIDSubDescriptor {
 public:
-  DynamicHIDSubDescriptor *next = NULL;
-  DynamicHIDSubDescriptor(const void *d, const uint16_t l, const bool ipm = true) : data(d), length(l), inProgMem(ipm) { }
+    DynamicHIDSubDescriptor *next = NULL;
+    DynamicHIDSubDescriptor(const void *d, const uint16_t l, const bool ipm = true) : data(d), length(l), inProgMem(ipm) { }
 
-  const void* data;
-  const uint16_t length;
-  const bool inProgMem;
+    const void* data;
+    const uint16_t length;
+    const bool inProgMem;
 };
 
 class DynamicHID_ : public PluggableUSBModule
 {
 public:
-  DynamicHID_(void);
-  int begin(void);
-  int SendReport(uint8_t id, const void* data, int len);
-  void AppendDescriptor(DynamicHIDSubDescriptor* node);
+    DynamicHID_(void);
+    int begin(void);
+    int SendReport(uint8_t id, const void* data, int len);
+    void AppendDescriptor(DynamicHIDSubDescriptor* node);
 
 protected:
-  // Implementation of the PluggableUSBModule
-  int getInterface(uint8_t* interfaceCount);
-  int getDescriptor(USBSetup& setup);
-  bool setup(USBSetup& setup);
-  uint8_t getShortName(char* name);
+    // Implementation of the PluggableUSBModule
+    int getInterface(uint8_t* interfaceCount);
+    int getDescriptor(USBSetup& setup);
+    bool setup(USBSetup& setup);
+    uint8_t getShortName(char* name);
 
 private:
-  #ifdef _VARIANT_ARDUINO_DUE_X_
-  uint32_t epType[1];
-  #else
-  uint8_t epType[1];
-  #endif
+    #ifdef _VARIANT_ARDUINO_DUE_X_
+    uint32_t epType[1];
+    #else
+    uint8_t epType[1];
+    #endif
 
-  DynamicHIDSubDescriptor* rootNode;
-  uint16_t descriptorSize;
+    DynamicHIDSubDescriptor* rootNode;
+    uint16_t descriptorSize;
 
-  uint8_t protocol;
-  uint8_t idle;
+    uint8_t protocol;
+    uint8_t idle;
 };
 
 // Replacement for global singleton.
